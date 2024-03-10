@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 #This program calculates the variance of numbers
+
 def calculate_variance(numbers):
     sum_numbers = 0
     for number in numbers:
