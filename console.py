@@ -30,8 +30,8 @@ class HBNBCommand(cmd.Cmd):
 			print(eval(class_name[0])().id)
 			storage.save()
 
-	def do_show(self, arg):	
 
 
-	if __name__ == '__main__':
-		HBNBCommand().cmdloop()
+
+if __name__ == '__main__':
+	HBNBCommand().cmdloop()
