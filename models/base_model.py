@@ -9,7 +9,7 @@ class BaseModel:
 
 	def __init__(self):
 		#Public instance attributes
-		self.id = uuid.uuid4().isoformat()
+		self.id = str(uuid.uuid4())
 		self.created_at = datetime.utcnow
 		self.updated_at = datetime.utcnow
 
@@ -20,11 +20,11 @@ class BaseModel:
 
 	def to_dict(self):
 		#Creates a dict of the self-set values
-		result_dict = self.__dict__.copy()
-		result_dict["__class__"] = self.__class__.__name__
-		result_dict["created_at"] = self.created_at.isoformat()
-		result_dict["updated_at"] = self.updated_at.isoformat()
-		return result_dict
+		return_dict = self.__dict__.copy()
+		return_dict["__class__"] = self.__class__.__name__
+		return_dict["created_at"] = self.created_at.isoformat()
+		return_dict["updated_at"] = self.updated_at.isoformat()
+		return return_dict
 
 	def __str__(self):
 		#Returns str representation of the BaseModel
