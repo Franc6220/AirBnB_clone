@@ -7,11 +7,14 @@ from datetime import datetime
 class BaseModel:
 	#Represents base_model of HBnB project
 
-	def __init__(self):
+	def __init__(self, id, created_at, updated_at):
 		#Public instance attributes
-		self.id = str(uuid.uuid4())
-		self.created_at = datetime.utcnow
-		self.updated_at = datetime.utcnow
+		self.id = id
+		self.created_at = created_at
+		self.updated_at = updated_at
+		
+		instance = BaseModel("{str(uuid.uuid4)}", "datetime.utcnow", "datetime.utcnow")
+		print(instance.id, instance.created_at, instance.updated_at)
 
 	def save(self):
 		#Modifies updated_at with current datetime. 
