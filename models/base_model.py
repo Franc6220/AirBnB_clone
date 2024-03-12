@@ -7,24 +7,9 @@ from datetime import datetime
 class BaseModel:
 	#Represents base_model of HBnB project
 
-	def __init__(self, *args, **kwargs):
-		"""Initializes a new BaseModel.
-		Args:
-			*args (any): Unused.
-			**kwargs (dict): Key/value pairs of attributes.
-		"""
-		format = "%Y-%m-%dT%H:%M:%S.%f"
-		self.id = str(uuid4())
-		self.created_at = datetime.utcnow()
-		self.updated_at = datetime.utcnow()
-		if len(kwargs) != 0:
-			for key, value in kwargs.items():
-				if key == "created_at" or key == "updated_at":
-					self.__dict__[key] = datetime.strptime(value, format)
-				else:
-					self._dict__[key] = value
-		else:
-			models.storage.new(self)
+	def __init__(self):
+		#
+		pass
 
 	def save(self):
 		#Modifies updated_at with current datetime. 
