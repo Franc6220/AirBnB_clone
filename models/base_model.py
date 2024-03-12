@@ -8,8 +8,10 @@ class BaseModel:
 	#Represents base_model of HBnB project
 
 	def __init__(self):
-		#
-		pass
+		#Public instance attributes
+		self.id = uuid.uuid4().isoformat()
+		self.created_at = datetime.utcnow
+		self.updated_at = datetime.utcnow
 
 	def save(self):
 		#Modifies updated_at with current datetime. 
@@ -19,7 +21,7 @@ class BaseModel:
 	def to_dict(self):
 		#Creates a dict of the self-set values
 		result_dict = self.__dict__.copy()
-		result_dict["__class__"] =self.__class__.__name__
+		result_dict["__class__"] = self.__class__.__name__
 		result_dict["created_at"] = self.created_at.isoformat()
 		result_dict["updated_at"] = self.updated_at.isoformat()
 		return result_dict
