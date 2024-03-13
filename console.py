@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #contains the entry point of the command interpreter
 import cmd
-import argperse
+
 
 class HBNBCommand(cmd.Cmd):
 	#Defines Command Interpreter
@@ -15,19 +15,19 @@ class HBNBCommand(cmd.Cmd):
 
 	def do_quit(self, arg):
 		#to exit the program
-		return TRUE
+		return True
 	
 	def help_quit(self, arg):
 		#Quit command to exit the program
-		return TRUE
+		return True
 
 	def do_EOF(self, arg):
 		#End Of File
-		return TRUE
+		return True
 
 	def do_create(self, arg):
 		#Creates a new instance of BaseModel, saves it to the JSON file and prints the id
-		class_name = argparse.ArgumentParser()
+		class_name = arg
 		if len(class_name) == 0:
 			print("** class name missing **")
 		elif class_name[0] not in HBNBCommand._classes:
