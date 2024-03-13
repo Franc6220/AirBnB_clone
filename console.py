@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 #contains the entry point of the command interpreter
 import cmd
-import argperse
 
 class HBNBCommand(cmd.Cmd):
-	#Defines Command Interpreter
+	#Defines Command Interpreter and acts as the class definition
 
 	prompt = "(hbnb)"
 	valid_classes = ["BaseModel"]
@@ -27,7 +26,7 @@ class HBNBCommand(cmd.Cmd):
 
 	def do_create(self, arg):
 		#Creates a new instance of BaseModel, saves it to the JSON file and prints the id
-		class_name = argparse.ArgumentParser()
+		class_name = arg
 		if len(class_name) == 0:
 			print("** class name missing **")
 		elif class_name[0] not in HBNBCommand._classes:
