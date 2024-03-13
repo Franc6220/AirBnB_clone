@@ -14,15 +14,15 @@ class HBNBCommand(cmd.Cmd):
 
 	def do_quit(self, arg):
 		#to exit the program
-		return TRUE
+		return True
 	
 	def help_quit(self, arg):
 		#Quit command to exit the program
-		return TRUE
+		return True
 
 	def do_EOF(self, arg):
 		#End Of File
-		return TRUE
+		return True
 
 	def do_create(self, arg):
 		#Creates a new instance of BaseModel, saves it to the JSON file and prints the id
