@@ -3,7 +3,6 @@
 import unittest
 from models.base_model import BaseModel
 from datetime import datetime
-import uuid
 
 class TestBaseModel(unittest.TestCase):
     def test_id_is_unique(self):
@@ -40,6 +39,20 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(dict_repr['updated_at'], bm.updated_at.isoformat())
         self.assertIsInstance(dict_repr['created_at'], str)
         self.assertIsInstance(dict_repr['updated_at'], str)
+
+    def test_init_with_kwargs(self):
+        data = {
+            'id': '123',
+            'created_at': '2023-05-25T12:34:56.789123',
+            'updated_at': '2023-05-25T12:34:56.789123',
+            'name': 'Test'
+        }
+        bm = BaseModel(**data)
+        self.assertEqual(bm.id, '123')
+        self.assertEqual(bm.created_at, datetime.fromisoformat('2023-05-25T12:34:56.789123'))
+        self.assertEqual(bm.updated_at, datetime.fromisoformat('2023-05-25T12:34:56.789123'))
+        self.assertEqual(bm.name, 'Test')
+        self.assertNotIn('__class__', bm.__dict__)
 
 if __name__ == '__main__':
     unittest.main()
