@@ -127,15 +127,27 @@ class HBNBCommand(cmd.Cmd):
         setattr(instance, attr_name, attr_value)
         instance.save()
 
-   def default(self, line):
-        """Handle commands with syntax <class name>.all()"""
+    def do_count(self, class_name):
+        """Counts the number of instances of a class."""
+        if class_name not in self.classes:
+            print("** class doesn't exist **")
+            return
+        count = sum(1 for key in storage.all() if key.startswith(class_name + "."))
+        print(count)
+
+    def default(self, line):
+        """Handle commands with syntax <class name>.all() or <class name>.count()"""
         if "." in line:
             class_name, command = line.split(".", 1)
             if class_name in self.classes:
                 if command == "all()":
                     self.do_all(class_name)
-                    return
-        print(f"*** Unknown syntax: {line}")
+                elif command == "count()":
+                    self.do_count(class_name)
+                else:
+                    print(f"*** Unknown syntax: {line}")
+            else:
+                print(f"*** Unknown syntax: {line}")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
