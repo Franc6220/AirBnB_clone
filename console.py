@@ -136,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
         print(count)
 
     def default(self, line):
-        """Handle commands with syntax <class name>.all(), <class name>.count(), <class name>.show(<id>), and <class name>.destroy(<id>)"""
+        """Handle commands with syntax <class name>.all(), <class name>.count(), <class name>.show(<id>), <class name>.destroy(<id>), <class name>.update(<id>, <attribute name>, <attribute value>)"""
         if "." in line:
             parts = line.split(".")
             class_name = parts[0]
@@ -153,6 +153,13 @@ class HBNBCommand(cmd.Cmd):
                 elif command.startswith("destroy(") and command.endswith(")"):
                     id_arg = command[8:-1]
                     self.do_destroy(f"{class_name} {id_arg}")
+                elif command.startswith("update(") and command.endswith(")"):
+                    args = command[7:-1].split(", ")
+                    if len(args) == 3:
+                        id_arg, attr_name, attr_value = args
+                        self.do_update(f"{class_name} {id_arg} {attr_name} {attr_value}")
+                    else:
+                        print(f"*** Unknown syntax: {line}")
                 else:
                     print(f"*** Unknown syntax: {line}")
             else:
