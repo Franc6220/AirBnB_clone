@@ -127,6 +127,16 @@ class HBNBCommand(cmd.Cmd):
         setattr(instance, attr_name, attr_value)
         instance.save()
 
+   def default(self, line):
+        """Handle commands with syntax <class name>.all()"""
+        if "." in line:
+            class_name, command = line.split(".", 1)
+            if class_name in self.classes:
+                if command == "all()":
+                    self.do_all(class_name)
+                    return
+        print(f"*** Unknown syntax: {line}")
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
 
