@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import cmd
+import json
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -136,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
         print(count)
 
     def default(self, line):
-        """Handle commands with syntax <class name>.all(), <class name>.count(), <class name>.show(<id>), <class name>.destroy(<id>), <class name>.update(<id>, <attribute name>, <attribute value>)"""
+        """Handle commands with syntax <class name>.all(), <class name>.count(), <class name>.show(<id>), <class name>.destroy(<id>), <class name>.update(<id>, <attribute name>, <attribute value>), <class name>.update(<id>, <dictionary representation>)"""
         if "." in line:
             parts = line.split(".")
             class_name = parts[0]
@@ -154,16 +155,44 @@ class HBNBCommand(cmd.Cmd):
                     id_arg = command[8:-1]
                     self.do_destroy(f"{class_name} {id_arg}")
                 elif command.startswith("update(") and command.endswith(")"):
-                    args = command[7:-1].split(", ")
-                    if len(args) == 3:
-                        id_arg, attr_name, attr_value = args
-                        self.do_update(f"{class_name} {id_arg} {attr_name} {attr_value}")
+                    args = command[7:-1].split(", ", 1)
+                    if len(args) == 2:
+                        id_arg = args[0]
+                        if args[1].startswith("{") and args[1].endswith("}"):
+                            try:
+                                attr_dict = json.loads(args[1])
+                                self.update_from_dict(class_name, id_arg, attr_dict)
+                            except json.JSONDecodeError:
+                                print(f"*** Unknown syntax: {line}")
+                        else:
+                            attr_name, attr_value = args[1].split(", ", 1)
+                            self.do_update(f"{class_name} {id_arg} {attr_name} {attr_value}")
                     else:
                         print(f"*** Unknown syntax: {line}")
                 else:
                     print(f"*** Unknown syntax: {line}")
             else:
                 print(f"*** Unknown syntax: {line}")
+
+    def update_from_dict(self, class_name, id_arg, attr_dict):
+        """Updates an instance based on class name and id using a dictionary of attributes."""
+        key = class_name + "." + id_arg
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+
+        instance = storage.all()[key]
+        for attr_name, attr_value in attr_dict.items():
+            # Cast value to the correct type
+            if hasattr(instance, attr_name):
+                attr_type = type(getattr(instance, attr_name))
+                try:
+                    attr_value = attr_type(attr_value)
+                except ValueError:
+                    print(f"** wrong type for {attr_name} **")
+                    continue
+            setattr(instance, attr_name, attr_value)
+        instance.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
