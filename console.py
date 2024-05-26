@@ -136,14 +136,20 @@ class HBNBCommand(cmd.Cmd):
         print(count)
 
     def default(self, line):
-        """Handle commands with syntax <class name>.all() or <class name>.count()"""
+        """Handle commands with syntax <class name>.all(), <class name>.count(), and <class name>.show(<id>)"""
         if "." in line:
-            class_name, command = line.split(".", 1)
+            parts = line.split(".")
+            class_name = parts[0]
+            command = parts[1]
+
             if class_name in self.classes:
                 if command == "all()":
                     self.do_all(class_name)
                 elif command == "count()":
                     self.do_count(class_name)
+                elif command.startswith("show(") and command.endswith(")"):
+                    id_arg = command[5:-1]
+                    self.do_show(f"{class_name} {id_arg}")
                 else:
                     print(f"*** Unknown syntax: {line}")
             else:
