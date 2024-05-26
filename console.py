@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import cmd
 from models.base_model import BaseModel
-from modls.user import User
+from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
@@ -11,7 +11,10 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
-    classes = {"BaseModel": BaseModel, "User": User}
+    classes = {
+        "BaseModel": BaseModel, "User": User, "State": State,
+        "City": City, "Amenity": Amenity, "Place": Place, "Review": Review
+    }
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -26,7 +29,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id."""
+        """Creates a new instance of a model, saves it (to the JSON file) and prints the id."""
         if not arg:
             print("** class name missing **")
             return

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # models/engine/file_storage.py
 
+import json
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -8,7 +9,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-import json
 
 class FileStorage:
     __file_path = "file.json"
@@ -18,7 +18,7 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        self.__objects[obj.__class__.__name__ + "." + obj.id] = obj
+        self.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
     def save(self):
         obj_dict = {key: obj.to_dict() for key, obj in self.__objects.items()}
