@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # tests/test_models/test_file_storage.py
-
 import unittest
+import json
 import os
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
@@ -48,3 +48,4 @@ class TestFileStorage(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+

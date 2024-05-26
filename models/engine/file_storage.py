@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # models/engine/file_storage.py
 import json
-from models.base_model import BaseModel
+from os.path import exists
 
 class FileStorage:
     __file_path = "file.json"
@@ -19,14 +19,14 @@ class FileStorage:
             json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
 
     def reload(self):
-        try:
+        if exists(self.__file_path):
             with open(self.__file_path, 'r') as f:
                 obj_dict = json.load(f)
                 for key, value in obj_dict.items():
                     class_name = key.split('.')[0]
+                    # Import classes dynamically to avoid circular import
                     if class_name == "BaseModel":
+                        from models.base_model import BaseModel
                         self.__objects[key] = BaseModel(**value)
                     # Add other classes here as needed
-        except FileNotFoundError:
-            pass
 
