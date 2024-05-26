@@ -3,40 +3,24 @@
 import cmd
 
 class HBNBCommand(cmd.Cmd):
-	#Defines Command Interpreter and acts as the class definition
+    prompt = '(hbnb) '
 
-	prompt = "(hbnb)"
-	valid_classes = ["BaseModel"]
+    def do_quit(self, arg):
+        """Quit command to exit the program"""
+        return True
 
-	def emptyline(self):
-		#shouldn’t execute anything
-		pass
+    def do_EOF(self, arg):
+        """EOF command to exit the program"""
+        return True
 
-	def do_quit(self, arg):
-		#to exit the program
-		return True
-	
-	def help_quit(self, arg):
-		#Quit command to exit the program
-		return True
+    def emptyline(self):
+        """Do nothing on empty input line"""
+        pass
 
-	def do_EOF(self, arg):
-		#End Of File
-		return True
-
-	def do_create(self, arg):
-		#Creates a new instance of BaseModel, saves it to the JSON file and prints the id
-		class_name = arg
-		if len(class_name) == 0:
-			print("** class name missing **")
-		elif class_name[0] not in HBNBCommand._classes:
-			print("** class dosen't exist **")
-		else:
-			print(eval(class_name[0])().id)
-			storage.save()
-
-
-
+    def do_help(self, arg):
+        """List available commands with "help" or detailed help with "help cmd"."""
+        super().do_help(arg)
 
 if __name__ == '__main__':
-	HBNBCommand().cmdloop()
+    HBNBCommand().cmdloop()
+
